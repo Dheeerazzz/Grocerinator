@@ -33,13 +33,28 @@
         }
 
         #title {
-            font-size: 2em;
-            font-weight: bold;
-            font-family: blueberry;
+            position: absolute;
+            top: 150%;
+            left: 11%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
 
-        .section:nth-child(2) {
-            background-color: #e74c3c; /* Red */
+        #image-container {
+            display: inline-block;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        #image-container img {
+            height: 180px;
+            width: 150px;
+            border-radius: 50%;
+        }
+
+        #name {
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
         }
 
         .section:nth-child(4) {
@@ -123,6 +138,9 @@
             position: absolute;
             top: 0px;
         }
+        #section2{
+            color: white;
+        }
     </style>
     <title>Grocerinator</title>
 </head>
@@ -132,21 +150,18 @@
 
         <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
-        <button class="scroll-button" onclick="scrollToNextSection()" id="submit">Scroll to Next Section</button>
+        <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
 
         <script>
-            function scrollToNextSection() {
-                const currentSection = document.querySelector('.section.active');
-                const nextSectionId = (currentSection.id === 'section4') ? 'section1' : `section${parseInt(currentSection.id.slice(-1)) + 1}`;
-                const nextSection = document.getElementById(nextSectionId);
-
-                if (nextSection) {
-                    nextSection.scrollIntoView({ behavior: 'smooth' });
-                    currentSection.classList.remove('active');
-                    nextSection.classList.add('active');
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+    
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
                 }
             }
         </script>
+    
 
         <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
@@ -155,8 +170,20 @@
         <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
     </div>
 
-    <div class="section" id="section2"><span style="position: absolute; top: 150%; left: 11%; transform: translate(-50%, -50%);" id="title"><img src="/images/cute-baby-with-different-expression-vector.jpg" height="150" width="150"></span>
-        <span style="position: absolute; top: 150%; left: 41%; transform: translate(-50%, -50%);" id="title"><img src="/images/adult.jpg" height="150" width="150"></span></div>
+    <div class="section" id="section2">
+        <span id="title">
+            <div id="image-container">
+                <img src="../images/babyhero-removebg-preview.png" alt="Baby Image">
+            </div>
+            <div id="name">Your Name</div>
+        </span>
+        <span style="position: absolute; top: 150%; left: 41%; transform: translate(-50%, -50%);" id="title">
+        <img src="../images/adultspidey.png" height="150" width="150"></span></div>
+        <span style="position: absolute; top: 150%; left: 101%; transform: translate(-50%, -50%);" id="title">
+            <img src="../images/muscularspidey.png" height="150" width="150"></span></div>
+        <span style="position: absolute; top: 150%; left: 71%; transform: translate(-50%, -50%);" id="title">
+            <img src="../images/leanspidey.png" height="150" width="150"></span></div>
+
 
       
         <div class="section">
