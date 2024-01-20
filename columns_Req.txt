@@ -1,0 +1,15 @@
+Unique identifier 
+Age
+Allergies
+Diseases
+Dietary preferences (e.g., "vegetarian", "low-sugar", "keto").
+
+Unique product identifier --- ok
+Product name --- Ok
+Food category --- ok
+Ingredients  --- ok
+Nutritional information ---side
+Allergen information 
+Safety flags: Flags indicating any safety concerns or recalls associated with the product.
+
+Target
