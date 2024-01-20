@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            scroll-behavior: smooth;
+        }
+
+        @font-face {
+            font-family: blueberry;
+            src: url(/font/blueberry_4/Blueberry\ .ttf);
+        }
+
+        @font-face {
+            font-family: futura;
+            src: url(/font//futura-display-cufonfonts/Futura\ Display.ttf);
+        }
+
+        .section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: black;
+        }
+
+        #title {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: blueberry;
+        }
+
+        .section:nth-child(2) {
+            background-color: #e74c3c; /* Red */
+        }
+
+        .section:nth-child(4) {
+            background-color: #f39c12; /* Orange */
+        }
+
+        #green_col {
+            width: 90%;
+            height: 100%;
+            object-fit: fill;
+            position: absolute;
+            left: 0;
+        }
+
+        #myIframe {
+            width: 600px;
+            height: 600px;
+            position: absolute;
+            right: 0;
+            border: 0;
+        }
+
+        #submit {
+            position: absolute;
+            top: 60%;
+            left: 30%;
+            transform: translate(-50%, -50%);
+            background-color: #3f51b5; /* Indigo */
+            border: 2px solid #3f51b5;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 2em;
+            font-family: futura;
+        }
+
+        #cart {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation:  8s linear infinite;
+        }
+
+        .flip-container {
+            perspective: 1000px;
+        }
+
+        .flipper {
+            transition: 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+
+        .flipped {
+            transform: rotateY(180deg);
+        }
+
+        .front, .back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .back {
+            transform: rotateY(180deg);
+        }
+        #form-section {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #section-3 container{
+            position: absolute;
+            top: 0px;
+        }
+    </style>
+    <title>Grocerinator</title>
+</head>
+<body>
+    <div class="section">
+        <img src="/images/Bg.png" id="green_col">
+
+        <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
+
+        <button class="scroll-button" onclick="scrollToNextSection()" id="submit">Scroll to Next Section</button>
+
+        <script>
+            function scrollToNextSection() {
+                const currentSection = document.querySelector('.section.active');
+                const nextSectionId = (currentSection.id === 'section4') ? 'section1' : `section${parseInt(currentSection.id.slice(-1)) + 1}`;
+                const nextSection = document.getElementById(nextSectionId);
+
+                if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                    currentSection.classList.remove('active');
+                    nextSection.classList.add('active');
+                }
+            }
+        </script>
+
+        <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
+
+        <img src="/images/cart.png" id="cart">
+
+        <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
+    </div>
+
+    <div class="section" id="section2"><span style="position: absolute; top: 150%; left: 11%; transform: translate(-50%, -50%);" id="title"><img src="/images/cute-baby-with-different-expression-vector.jpg" height="150" width="150"></span>
+        <span style="position: absolute; top: 150%; left: 41%; transform: translate(-50%, -50%);" id="title"><img src="/images/adult.jpg" height="150" width="150"></span></div>
+
+      
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="flip-container">
+                            <div class="flipper" id="flipper">
+                                <!-- Front side of the card -->
+                                <div class="card front">
+                                    <div class="card-body">
+                                        <form id="myForm" onsubmit="flipCard(); return false;">
+                                            <h5 class="text-center mb-4">Enter Nutrient values</h5>
+                                            <div class="row">
+                                                <!-- Left side columns -->
+                                                <div class="col-md-6">
+                                                    <!-- Nutrient 1 -->
+                                                    <div class="form-group">
+                                                        <label for="Fats">Fats</label>
+                                                        <input type="text" class="form-control" id="nutrient1" placeholder="Enter fat values">
+                                                    </div>
+                                                    <!-- Nutrient 2 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient2">Nutrient 2:</label>
+                                                        <input type="text" class="form-control" id="nutrient2" placeholder="Enter nutrient 2">
+                                                    </div>
+                                                    <!-- Nutrient 3 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient3">Nutrient 3:</label>
+                                                        <input type="text" class="form-control" id="nutrient3" placeholder="Enter nutrient 3">
+                                                    </div>
+                                                    <!-- Nutrient 4 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient4">Nutrient 4:</label>
+                                                        <input type="text" class="form-control" id="nutrient4" placeholder="Enter nutrient 4">
+                                                    </div>
+                                                </div>
+                                                <!-- Right side columns -->
+                                                <div class="col-md-6">
+                                                    <!-- Nutrient 5 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient5">Nutrient 5:</label>
+                                                        <input type="text" class="form-control" id="nutrient5" placeholder="Enter nutrient 5">
+                                                    </div>
+                                                    <!-- Nutrient 6 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient6">Nutrient 6:</label>
+                                                        <input type="text" class="form-control" id="nutrient6" placeholder="Enter nutrient 6">
+                                                    </div>
+                                                    <!-- Nutrient 7 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient7">Nutrient 7:</label>
+                                                        <input type="text" class="form-control" id="nutrient7" placeholder="Enter nutrient 7">
+                                                    </div>
+                                                    <!-- Nutrient 8 -->
+                                                    <div class="form-group">
+                                                        <label for="nutrient8">Nutrient 8:</label>
+                                                        <input type="text" class="form-control" id="nutrient8" placeholder="Enter nutrient 8">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Centered button for form submission -->
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Flip to Scan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Back side of the card -->
+                                <div class="card back">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Back of the Card</h5>
+                                        <p>This is the back side content of the card.</p>
+                                        <button type="button" class="btn btn-secondary" onclick="unflipCard()">Return Back</button>
+                                    </div>
+                                </div>
+                            </div> <!-- Closing div tag for flipper -->
+                        </div> <!-- Closing div tag for flip-container -->
+                    </div> <!-- Closing div tag for col-md-12 -->
+                </div> <!-- Closing div tag for row -->
+            </div> <!-- Closing div tag for container -->
+        </div> <!-- Closing div tag for section -->
+        <script>
+            function flipCard() {
+                document.getElementById('flipper').classList.add('flipped');
+            }
+        
+            function unflipCard() {
+                document.getElementById('flipper').classList.remove('flipped');
+            }
+        </script>
+        
+        
+        <script>
+            function flipCard() {
+                document.getElementById('flipper').classList.add('flipped');
+            }
+        
+            function unflipCard() {
+                document.getElementById('flipper').classList.remove('flipped');
+            }
+        </script>
+        
+
+        
+        
+        <script>
+            function flipCard() {
+                document.getElementById('flipper').classList.add('flipped');
+            }
+        
+            function unflipCard() {
+                document.getElementById('flipper').classList.remove('flipped');
+            }
+        </script>
+        
+        
+        
+
+    <div class="section">Section 4</div>
+
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
