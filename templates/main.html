@@ -138,9 +138,40 @@
             position: absolute;
             top: 0px;
         }
+<<<<<<< HEAD
         #section2{
             color: white;
         }
+=======
+        #section4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.odometer {
+  display: flex;
+  font-size: 2rem;
+}
+
+.digit {
+  margin: 0 0.2rem;
+  border: 1px solid #333;
+  padding: 0.5rem;
+  width: 2rem;
+  text-align: center;
+}
+.container3 {
+  width: 60%;
+  height: 100%;
+  position: absolute;
+  top: 210vh;
+  left:20 px;
+}
+
+>>>>>>> 5561186aaf9498aa0edfb898871b9a3d44218ace
     </style>
     <title>Grocerinator</title>
 </head>
@@ -152,6 +183,7 @@
 
         <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
 
+<<<<<<< HEAD
         <script>
             function scrollToSection(sectionId) {
                 const section = document.getElementById(sectionId);
@@ -162,6 +194,9 @@
             }
         </script>
     
+=======
+
+>>>>>>> 5561186aaf9498aa0edfb898871b9a3d44218ace
 
         <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
@@ -187,7 +222,7 @@
 
       
         <div class="section">
-            <div class="container">
+            <div class="container3">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="flip-container">
@@ -195,7 +230,7 @@
                                 <!-- Front side of the card -->
                                 <div class="card front">
                                     <div class="card-body">
-                                        <form id="myForm" onsubmit="flipCard(); return false;">
+                                        <form id="myForm" return false;">
                                             <h5 class="text-center mb-4">Enter Nutrient values</h5>
                                             <div class="row">
                                                 <!-- Left side columns -->
@@ -205,49 +240,50 @@
                                                         <label for="Fats">Fats</label>
                                                         <input type="text" class="form-control" id="nutrient1" placeholder="Enter fat values">
                                                     </div>
-                                                    <!-- Nutrient 2 -->
+                                                    <!-- Saturated fats -->
                                                     <div class="form-group">
-                                                        <label for="nutrient2">Nutrient 2:</label>
-                                                        <input type="text" class="form-control" id="nutrient2" placeholder="Enter nutrient 2">
+                                                        <label for="Saturated fats">Saturated fats:</label>
+                                                        <input type="text" class="form-control" id="nutrient2" placeholder="Enter Saturated fats">
                                                     </div>
-                                                    <!-- Nutrient 3 -->
+                                                    <!-- Carbohydrates -->
                                                     <div class="form-group">
-                                                        <label for="nutrient3">Nutrient 3:</label>
-                                                        <input type="text" class="form-control" id="nutrient3" placeholder="Enter nutrient 3">
+                                                        <label for="Carbohydrates">Carbohydrates:</label>
+                                                        <input type="text" class="form-control" id="Carbohydrates" placeholder="Enter Carbohydrates">
                                                     </div>
-                                                    <!-- Nutrient 4 -->
+                                                    <!-- Energy -->
                                                     <div class="form-group">
-                                                        <label for="nutrient4">Nutrient 4:</label>
-                                                        <input type="text" class="form-control" id="nutrient4" placeholder="Enter nutrient 4">
+                                                        <label for="Energy">Energy:</label>
+                                                        <input type="text" class="form-control" id="Energy" placeholder="Enter Energy">
                                                     </div>
                                                 </div>
                                                 <!-- Right side columns -->
                                                 <div class="col-md-6">
-                                                    <!-- Nutrient 5 -->
+                                                    <!-- Sugar -->
                                                     <div class="form-group">
-                                                        <label for="nutrient5">Nutrient 5:</label>
-                                                        <input type="text" class="form-control" id="nutrient5" placeholder="Enter nutrient 5">
+                                                        <label for="Sugar">Sugar:</label>
+                                                        <input type="text" class="form-control" id="Sugar" placeholder="Enter Sugar">
                                                     </div>
-                                                    <!-- Nutrient 6 -->
+                                                    <!-- Fiber -->
                                                     <div class="form-group">
-                                                        <label for="nutrient6">Nutrient 6:</label>
-                                                        <input type="text" class="form-control" id="nutrient6" placeholder="Enter nutrient 6">
+                                                        <label for="Fiber">Fiber:</label>
+                                                        <input type="text" class="form-control" id="Fiber" placeholder="Enter Fiber">
                                                     </div>
-                                                    <!-- Nutrient 7 -->
+                                                    <!-- Protein -->
                                                     <div class="form-group">
-                                                        <label for="nutrient7">Nutrient 7:</label>
-                                                        <input type="text" class="form-control" id="nutrient7" placeholder="Enter nutrient 7">
+                                                        <label for="Protein">Protein:</label>
+                                                        <input type="text" class="form-control" id="Protein" placeholder="Enter Protein">
                                                     </div>
-                                                    <!-- Nutrient 8 -->
+                                                    <!-- Salt -->
                                                     <div class="form-group">
-                                                        <label for="nutrient8">Nutrient 8:</label>
-                                                        <input type="text" class="form-control" id="nutrient8" placeholder="Enter nutrient 8">
+                                                        <label for="Salt">Salt:</label>
+                                                        <input type="text" class="form-control" id="Salt" placeholder="Enter Salt">
                                                     </div>
                                                 </div>
                                             </div>
                                             <!-- Centered button for form submission -->
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">Flip to Scan</button>
+                                                <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
+                                                <button type="submit" class="btn btn-success">Submit Form</button>
                                             </div>
                                         </form>
                                     </div>
@@ -255,9 +291,10 @@
                                 <!-- Back side of the card -->
                                 <div class="card back">
                                     <div class="card-body">
-                                        <h5 class="card-title">Back of the Card</h5>
-                                        <p>This is the back side content of the card.</p>
+                                        <center><h5 class="card-title">Scan Results</h5>
+                                        <img src="/images/camers.png"><br>
                                         <button type="button" class="btn btn-secondary" onclick="unflipCard()">Return Back</button>
+                                    </center>
                                     </div>
                                 </div>
                             </div> <!-- Closing div tag for flipper -->
@@ -266,44 +303,16 @@
                 </div> <!-- Closing div tag for row -->
             </div> <!-- Closing div tag for container -->
         </div> <!-- Closing div tag for section -->
-        <script>
-            function flipCard() {
-                document.getElementById('flipper').classList.add('flipped');
-            }
-        
-            function unflipCard() {
-                document.getElementById('flipper').classList.remove('flipped');
-            }
-        </script>
-        
-        
-        <script>
-            function flipCard() {
-                document.getElementById('flipper').classList.add('flipped');
-            }
-        
-            function unflipCard() {
-                document.getElementById('flipper').classList.remove('flipped');
-            }
-        </script>
-        
+       
 
-        
-        
-        <script>
-            function flipCard() {
-                document.getElementById('flipper').classList.add('flipped');
-            }
-        
-            function unflipCard() {
-                document.getElementById('flipper').classList.remove('flipped');
-            }
-        </script>
-        
-        
-        
-
-    <div class="section">Section 4</div>
+    <div class="section" id="section4">
+        <div class="odometer">
+            <div class="digit" id="thousands">0</div>
+            <div class="digit" id="hundreds">0</div>
+            <div class="digit" id="tens">0</div>
+            <div class="digit" id="ones">0</div>
+          </div>
+    </div>
 
     <script>
         function flipCard() {
@@ -314,6 +323,61 @@
             document.getElementById('flipper').classList.remove('flipped');
         }
     </script>
+     <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+    
+    
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+    
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+  const thousands = document.getElementById('thousands');
+  const hundreds = document.getElementById('hundreds');
+  const tens = document.getElementById('tens');
+  const ones = document.getElementById('ones');
+
+  let odometerValue = 0;
+
+  setInterval(() => {
+    odometerValue++;
+    updateOdometer();
+  }, 1000);
+
+  function updateOdometer() {
+    const valueString = odometerValue.toString().padStart(4, '0');
+    thousands.textContent = valueString[0];
+    hundreds.textContent = valueString[1];
+    tens.textContent = valueString[2];
+    ones.textContent = valueString[3];
+  }
+});
+
+    </script>
+    
+    
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
