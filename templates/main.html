@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.google.com/specimen/Bungee?sort=popularity">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        @font-face {
+            font-family: blueberry;
+            src: url(/font/blueberry_4/Blueberry\ .ttf);
+        }
+        .section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: black;
+        }
+        #title{
+            font-size: 2em;
+            font-weight:bold;
+            font-family: blueberry;
+        }
+
+        .section:nth-child(2) {
+            background-color: #e74c3c; /* Red */
+        }
+
+        .section:nth-child(3) {
+            background-color: #2ecc71; /* Green */
+        }
+
+        .section:nth-child(4) {
+            background-color: #f39c12; /* Orange */
+        }
+        #green_col{
+            width: 90%;
+            height: 100%;
+            object-fit:fill;
+            position: absolute;
+            left:0;
+        }
+    </style>
+    <title>Your Webpage Title</title>
+</head>
+<body>
+    <div class="section">
+        <img src="/images/Bg.png" id="green_col">
+        <span style="position: absolute; top: 45%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
+        <img src="/images/cart.png" style="position: absolute; top: 48%; left: 50%; transform: translate(-50%, -50%);">
+        <div style="width:100%; height:0; padding-bottom:100%; position:relative; display:flex; justify-content:flex-end;">
+            <iframe src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="300px" height="300px" style="position:absolute;" frameBorder="0" class="giphy-embed"></iframe>
+        </div>
+        
+    </div>
+    <div class="section">Section 2</div>
+    <div class="section">Section 3</div>
+    <div class="section">Section 4</div>
+</body>
+</html>
