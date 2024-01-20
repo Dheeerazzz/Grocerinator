@@ -1,0 +1,99 @@
+class NutriScoreCalculator:
+    def __init__(self, target_population='adult'):
+        self.target_population = target_population.lower()
+        self.nutrient_weights = {
+            'energy': 0.08,
+            'saturated_fat': 1.0,
+            'total_sugars': 1.0,
+            'sodium': 0.06,
+            'proteins': 0.02,
+            'carbohydrates': 1.0,
+            'fibers': -1.0,
+        }
+
+        self.adjust_weights_for_population()
+
+    def adjust_weights_for_population(self):
+        if self.target_population == 'kid':
+            self.nutrient_weights['saturated_fat'] *= 0.8
+            self.nutrient_weights['total_sugars'] *= 0.8
+            self.nutrient_weights['sodium'] *= 0.8
+        elif self.target_population == 'weight_loss':
+            self.nutrient_weights['saturated_fat'] *= 0.6
+            self.nutrient_weights['total_sugars'] *= 0.6
+            self.nutrient_weights['carbohydrates'] *= 0.6
+            self.nutrient_weights['energy'] *= 0.7
+        elif self.target_population == 'weight_gain':
+            self.nutrient_weights['carbohydrates'] *= 1.2
+            self.nutrient_weights['energy'] *= 1.2
+
+    def calculate_nutri_score(self, nutrients):
+        score = 0
+
+        for nutrient, weight in self.nutrient_weights.items():
+            if nutrient in nutrients:
+                value = nutrients[nutrient]
+                score += self.calculate_nutrient_score(value, nutrient, weight)
+
+        return self.map_to_10_scale(score)
+
+    def calculate_nutrient_score(self, value, nutrient, weight):
+        if nutrient == 'energy':
+            return self.calculate_energy_score(value, weight)
+        else:
+            return self.calculate_basic_nutrient_score(value, nutrient, weight)
+
+    def calculate_energy_score(self, value, weight):
+        if value <= 335:
+            return 0
+        elif value <= 670:
+            return weight
+        elif value <= 1005:
+            return 2 * weight
+        elif value <= 1340:
+            return 3 * weight
+        elif value <= 1675:
+            return 4 * weight
+        else:
+            return 5 * weight
+
+    def calculate_basic_nutrient_score(self, value, nutrient, weight):
+        if nutrient in ['proteins', 'carbohydrates']:
+            target_value = 100.0
+        elif nutrient == 'fibers':
+            target_value = 30.0
+        else:
+            target_value = 8.0
+
+        adjusted_value = min(value / target_value, 1.0)
+        return adjusted_value * weight
+
+    def map_to_10_scale(self, score):
+        # Map the Nutri-Score to a 1 to 10 scale
+        return min(10, max(1, 10 - score))
+
+# Example usage
+nutrient_values = {
+    'energy': 328746896,
+    'saturated_fat': 153987497,
+    'total_sugars': 25749593,
+    'sodium': 187623468,
+    'proteins': 10,
+    'carbohydrates': 509990,
+    'fibers': 15,
+}
+
+calculator_adult = NutriScoreCalculator(target_population='adult')
+calculator_kid = NutriScoreCalculator(target_population='kid')
+calculator_weight_loss = NutriScoreCalculator(target_population='weight_loss')
+calculator_weight_gain = NutriScoreCalculator(target_population='weight_gain')
+
+nutri_score_adult = calculator_adult.calculate_nutri_score(nutrient_values)
+nutri_score_kid = calculator_kid.calculate_nutri_score(nutrient_values)
+nutri_score_weight_loss = calculator_weight_loss.calculate_nutri_score(nutrient_values)
+nutri_score_weight_gain = calculator_weight_gain.calculate_nutri_score(nutrient_values)
+
+print("Nutri-Score (Adult):", nutri_score_adult)
+print("Nutri-Score (Kid):", nutri_score_kid)
+print("Nutri-Score (Weight Loss):", nutri_score_weight_loss)
+print("Nutri-Score (Weight Gain):", nutri_score_weight_gain)
