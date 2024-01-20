@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .curves-container {
+            position: relative;
+            width: 50%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .curve {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #3498db; /* Adjust the color as needed */
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 2em;
+            color: #ffffff; /* Adjust the text color as needed */
+        }
+    </style>
+    <title>Grocienator</title>
+</head>
+<body>
+    <div class="curves-container">
+        <div class="curve"></div>
+        <div class="content">
+            <h1 class="title">Grocienator</h1>
+        </div>
+    </div>
+</body>
+</html>
