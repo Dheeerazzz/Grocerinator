@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Selector</title>
+</head>
+<body>
+    <h1>Select a Model</h1>
+    <form action="/predict" method="post">
+        <label for="model">Choose a Model:</label>
+        <select name="model" id="model">
+            {% for model in models %}
+                <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <h2>Enter Nutrition Data</h2>
+        
+        <label for="energy">Energy:</label>
+        <input type="text" name="Energy" id="energy" required><br>
+
+        <label for="fat">Fat:</label>
+        <input type="text" name="Fat" id="fat" required><br>
+
+        <label for="saturated_fat">Saturated Fat:</label>
+        <input type="text" name="Saturated Fat" id="saturated_fat" required><br>
+
+        <label for="carbohydrates">Carbohydrates:</label>
+        <input type="text" name="Carbohydrates" id="carbohydrates" required><br>
+
+        <label for="sugars">Sugars:</label>
+        <input type="text" name="Sugars" id="sugars" required><br>
+
+        <label for="fiber">Fiber:</label>
+        <input type="text" name="Fiber" id="fiber" required><br>
+
+        <label for="proteins">Proteins:</label>
+        <input type="text" name="Proteins" id="proteins" required><br>
+
+        <label for="salt">Salt:</label>
+        <input type="text" name="Salt" id="salt" required><br>
+
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
