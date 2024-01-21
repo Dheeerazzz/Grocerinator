@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.9/themes/odometer-theme-default.min.css">
 </head>
@@ -109,6 +110,14 @@
             transform: translate(-50%, -50%);
           
         }
+        @keyframes moveCart {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(calc(100vw - 100%));
+    }
+}
 
         .flip-container {
             perspective: 1000px;
@@ -190,49 +199,39 @@
 
             <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
-           <a href="#section2"> <button id="submit" type="submit" onsubmit="scrollToSection('section2')">Scroll to Next Section</button></a>
+        <button style="z-index:99;" id="submit" class="scroll-button" onclick="scrollToPage('section2')">Scroll to Next Section</button>
 
-            <script>
-                function scrollToSection(sectionId) {
-                    const section = document.getElementById(sectionId);
-        
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            </script>
-        
+        <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
-            <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
+        <img src="/images/cart.png" id="cart">
 
-            <img src="/images/cart.png" id="cart">
-
-            <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
-        </div>
+        <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
+    </div>
     
-        <div id="section2" class="section">
-            <div class="tile">
-                <img src="/page2_images/baby.jpg" height="300" width="300">
-                <div id="name1">Babies</div>
-            </div>
-            <div class="tile">
-                <img src="/page2_images/adult.jpg" height="300" width="300">
-                <div id="name2">Adults</div>
-            </div>
-            <div class="tile">
-                <img src="/page2_images/weight_loss.jpg" height="300" width="300">
-                <div id="name3">To lose weight</div>
-            </div>
-            <div class="tile">
-                <img src="/page2_images/muscle.jpg" height="300" width="300">
-                <div id="name4">To gain weight</div>
-            </div>
-            <div id="page2_button">
-                <button type="submit" class="btn btn-success" onclick="scrollToSection('section3')">Submit</button>
-            </div>
+    
+    <div id="section2" class="section">
+        <div class="tile">
+            <img src="/page2_images/baby.jpg" height="300" width="300">
+            <div id="name1">Babies</div>
         </div>
+        <div class="tile">
+            <img src="/page2_images/adult.jpg" height="300" width="300">
+            <div id="name2">Adults</div>
+        </div>
+        <div class="tile">
+            <img src="/page2_images/weight_loss.jpg" height="300" width="300">
+            <div id="name3">To lose weight</div>
+        </div>
+        <div class="tile">
+            <img src="/page2_images/muscle.jpg" height="300" width="300">
+            <div id="name4">To gain weight</div>
+        </div>
+        <div id="page2_button">
+            <button type="submit" class="btn btn-success" onclick="scrollToPage('section3')">Submit</button>
+        </div>
+    </div>
       
-        <div class="section" id="section3">
+        <div id="section3" class="section">
             <div class="container3">
                 <div class="row">
                     <div class="col-md-12">
@@ -294,7 +293,7 @@
                                             <!-- Centered button for form submission -->
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
-                                                <a href="#section4" ><button type="submit" class="btn btn-primary">Submit</button></a>
+                                                <button type="submit" style="z-index:99;" class="btn btn-success" onclick="scrollToPage('section4')">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -306,10 +305,25 @@
                                             <h5 class="card-title">Scan Results</h5>
                                             <video id="cameraFeed" width="640" height="480" autoplay></video><br>
                                             <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and Process</button>
-                                            <button type="button" class="btn btn-secondary" onclick="unflipCard()">Return Back</button>
                                             <div id="ocrResult"></div>
                                         </center>
                                     </div>
+                                    <script>
+                                        document.querySelector('form').addEventListener('submit', async function (e) {
+                                            e.preventDefault();
+                                    
+                                            const formData = new FormData(this);
+                                    
+                                            const response = await fetch('/process_image', {
+                                                method: 'POST',
+                                                body: formData
+                                            });
+                                    
+                                            const result = await response.json();
+                                    
+                                            document.getElementById('result').textContent = result.result;
+                                        });
+                                    </script>
                                 </div>
                             </div> 
                         </div> 
@@ -325,7 +339,7 @@
 
         <script>//OCR Version
             // Get the video element
-            const video = document.getElementById('cameraFeed');
+
 
             // Request access to the camera
             navigator.mediaDevices.getUserMedia({ video: true })
@@ -401,3 +415,187 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         </body>
         </html>
+    <div id="section4" class="section">
+        <div class="odometer">
+            <div class="digit" id="thousands">0</div>
+            <div class="digit" id="hundreds">0</div>
+            <div class="digit" id="tens">0</div>
+            <div class="digit" id="ones">0</div>
+          </div>
+    </div>
+    <script>
+        // Get the video element
+        let video = document.getElementById('cameraFeed');
+    
+        // Request access to the camera
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+    
+        function performOCR() {
+            // Create a canvas to draw the current frame
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+            // Convert canvas to base64 image
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            const base64Image = dataUrl.split(',')[1];
+    
+            // Send the image to the server for OCR processing
+            fetch('/process_ocr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: base64Image }),
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display the OCR result
+                document.getElementById('ocrResult').textContent = result.result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+    <script>
+        function scrollToPage(sectionId) {
+            const nextPage = document.getElementById(sectionId);
+
+            if (nextPage) {
+                nextPage.style.display = 'flex';
+                window.scrollTo({
+                    top: nextPage.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+</script>
+<script>
+    const cart = document.getElementById('cart');
+
+    // Event listener to check when the animation completes
+    cart.addEventListener('animationiteration', checkCartPosition);
+    
+    function checkCartPosition() {
+        // Get the position of the cart
+        const cartRect = cart.getBoundingClientRect();
+    
+        // Check if the cart is near the right edge of the viewport
+        if (cartRect.right >= window.innerWidth) {
+            // Perform the page transition logic here
+            // For now, let's simply redirect to the next page
+            window.location.href = 'nextPage.html';
+        }
+    }
+</script>
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+     <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+
+    
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+    </script>
+    <script>document.getElementById('imageInput').addEventListener('change', handleImage);
+
+        function handleImage() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+        
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        processImage(image);
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function processImage(image) {
+            Tesseract.recognize(
+                image,
+                'eng', // Language code (English in this case)
+                {
+                    logger: info => console.log(info)
+                }
+            ).then(({ data: { text } }) => {
+                document.getElementById('result').textContent = text;
+            });
+        }
+        </script>
+    <script>
+        function flipCard() {
+            document.getElementById('flipper').classList.add('flipped');
+        }
+    
+        function unflipCard() {
+            document.getElementById('flipper').classList.remove('flipped');
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+  const thousands = document.getElementById('thousands');
+  const hundreds = document.getElementById('hundreds');
+  const tens = document.getElementById('tens');
+  const ones = document.getElementById('ones');
+
+  let odometerValue = 0;
+
+  setInterval(() => {
+    odometerValue++;
+    updateOdometer();
+  }, 1000);
+
+  function updateOdometer() {
+    const valueString = odometerValue.toString().padStart(4, '0');
+    thousands.textContent = valueString[0];
+    hundreds.textContent = valueString[1];
+    tens.textContent = valueString[2];
+    ones.textContent = valueString[3];
+  }
+});
+
+    </script>
+    
+    
+    
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+npm install -g http-server
+http-server
