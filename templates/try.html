@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page with Scroll</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .page {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+        }
+
+        #page1 {
+            background-color: lightblue;
+        }
+
+        #page2 {
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="page">
+        <h1>Page 1 Content</h1>
+        <p>This is the content of Page 1.</p>
+        <button onclick="scrollToPage('page2')">Go to Next Page</button>
+    </div>
+
+    <div id="page2" class="page" style="display: none;">
+        <h1>Page 2 Content</h1>
+        <p>This is the content of Page 2.</p>
+    </div>
+
+    <script>
+        function scrollToPage(pageId) {
+            const nextPage = document.getElementById(pageId);
+
+            if (nextPage) {
+                nextPage.style.display = 'flex';
+                window.scrollTo({
+                    top: nextPage.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

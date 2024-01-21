@@ -192,12 +192,12 @@ div.tile{
     <title>Grocerinator</title>
 </head>
 <body>
-    <div class="section">
+    <div id="section1" class="section">
         <img src="/images/Bg.png" id="green_col">
 
         <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
-        <button type="submit" id="submit" onclick="scrollToSection('section2')">Scroll to Next Section</button>
+        <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
 
         <script>
             function scrollToSection(sectionId) {
@@ -216,8 +216,21 @@ div.tile{
 
         <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
     </div>
-
-    <div class="section" id="section2">
+    <script>
+        function scrollToPage(sectionId) {
+            const sections = document.getElementById(sectionId);
+    
+            if (sections) {
+                sections.style.display = 'flex';
+                window.scrollTo({
+                    top: sections.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+    
+    <div id="section2" class="section">
         <div class="tile">
             <img src="/page2_images/baby.jpg" height="300" width="300">
             <div id="name1">Babies</div>
@@ -351,7 +364,7 @@ div.tile{
             document.getElementById('flipper').classList.remove('flipped');
         }
     </script>
-    
+
     
     <script>
         function flipCard() {
