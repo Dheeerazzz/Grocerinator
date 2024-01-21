@@ -293,6 +293,7 @@
                                             <!-- Centered button for form submission -->
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
+                                                
                                                 <button type="submit" style="z-index:99;" class="btn btn-success" onclick="scrollToPage('section4')">Submit</button>
                                             </div>
                                         </form>
@@ -305,6 +306,7 @@
                                             <h5 class="card-title">Scan Results</h5>
                                             <video id="cameraFeed" width="640" height="480" autoplay></video><br>
                                             <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and Process</button>
+                                            <button type="button" class="btn btn-primary" onclick="unflipCard()">Go Back</button>
                                             <div id="ocrResult"></div>
                                         </center>
                                     </div>
@@ -415,14 +417,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         </body>
         </html>
-    <div id="section4" class="section">
-        <div class="odometer">
-            <div class="digit" id="thousands">0</div>
-            <div class="digit" id="hundreds">0</div>
-            <div class="digit" id="tens">0</div>
-            <div class="digit" id="ones">0</div>
-          </div>
-    </div>
+
     <script>
         // Get the video element
         let video = document.getElementById('cameraFeed');
@@ -565,27 +560,7 @@
         function unflipCard() {
             document.getElementById('flipper').classList.remove('flipped');
         }
-        document.addEventListener('DOMContentLoaded', function () {
-  const thousands = document.getElementById('thousands');
-  const hundreds = document.getElementById('hundreds');
-  const tens = document.getElementById('tens');
-  const ones = document.getElementById('ones');
-
-  let odometerValue = 0;
-
-  setInterval(() => {
-    odometerValue++;
-    updateOdometer();
-  }, 1000);
-
-  function updateOdometer() {
-    const valueString = odometerValue.toString().padStart(4, '0');
-    thousands.textContent = valueString[0];
-    hundreds.textContent = valueString[1];
-    tens.textContent = valueString[2];
-    ones.textContent = valueString[3];
-  }
-});
+       
 
     </script>
     
@@ -597,5 +572,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-npm install -g http-server
-http-server
+
