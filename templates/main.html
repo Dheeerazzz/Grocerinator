@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body, html {
@@ -106,6 +107,14 @@
             transform: translate(-50%, -50%);
             animation:  8s linear infinite;
         }
+        @keyframes moveCart {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(calc(100vw - 100%));
+    }
+}
 
         .flip-container {
             perspective: 1000px;
@@ -197,18 +206,7 @@ div.tile{
 
         <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
-        <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
-
-        <script>
-            function scrollToSection(sectionId) {
-                const section = document.getElementById(sectionId);
-    
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            }
-        </script>
-    
+        <button style="z-index:99;" id="submit" class="scroll-button" onclick="scrollToPage('section2')">Scroll to Next Section</button>
 
         <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
@@ -216,19 +214,7 @@ div.tile{
 
         <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
     </div>
-    <script>
-        function scrollToPage(sectionId) {
-            const sections = document.getElementById(sectionId);
     
-            if (sections) {
-                sections.style.display = 'flex';
-                window.scrollTo({
-                    top: sections.offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        }
-    </script>
     
     <div id="section2" class="section">
         <div class="tile">
@@ -248,12 +234,11 @@ div.tile{
             <div id="name4">To gain weight</div>
         </div>
         <div id="page2_button">
-            <button type="submit" class="btn btn-success" onclick="scrollToSection('section3')">Submit</button>
+            <button type="submit" class="btn btn-success" onclick="scrollToPage('section3')">Submit</button>
         </div>
     </div>
-
       
-        <div class="section" id="section3">
+        <div id="section3" class="section">
             <div class="container3">
                 <div class="row">
                     <div class="col-md-12">
@@ -315,7 +300,7 @@ div.tile{
                                             <!-- Centered button for form submission -->
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
-                                                <button type="submit" class="btn btn-success" onclick="scrollToSection('section4')">Submit</button>
+                                                <button type="submit" style="z-index:99;" class="btn btn-success" onclick="scrollToPage('section4')">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -325,6 +310,9 @@ div.tile{
                                     <div class="card-body">
                                         <center><h5 class="card-title">Scan Results</h5>
                                         <img src="/images/camers.png"><br>
+                                        <input type="file" id="imageInput" accept="image/*">
+                                        <button onclick="processImage()">Process Image</button>
+                                        <div id="result"></div>
                                         <button type="button" class="btn btn-secondary" onclick="unflipCard()">Return Back</button>
                                     </center>
                                     </div>
@@ -337,7 +325,7 @@ div.tile{
         </div> <!-- Closing div tag for section -->
        
 
-    <div class="section" id="section4">
+    <div id="section4" class="section">
         <div class="odometer">
             <div class="digit" id="thousands">0</div>
             <div class="digit" id="hundreds">0</div>
@@ -345,7 +333,37 @@ div.tile{
             <div class="digit" id="ones">0</div>
           </div>
     </div>
+    <script>
+        function scrollToPage(sectionId) {
+            const nextPage = document.getElementById(sectionId);
 
+            if (nextPage) {
+                nextPage.style.display = 'flex';
+                window.scrollTo({
+                    top: nextPage.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+</script>
+<script>
+    const cart = document.getElementById('cart');
+
+    // Event listener to check when the animation completes
+    cart.addEventListener('animationiteration', checkCartPosition);
+    
+    function checkCartPosition() {
+        // Get the position of the cart
+        const cartRect = cart.getBoundingClientRect();
+    
+        // Check if the cart is near the right edge of the viewport
+        if (cartRect.right >= window.innerWidth) {
+            // Perform the page transition logic here
+            // For now, let's simply redirect to the next page
+            window.location.href = 'nextPage.html';
+        }
+    }
+</script>
     <script>
         function flipCard() {
             document.getElementById('flipper').classList.add('flipped');
@@ -375,7 +393,37 @@ div.tile{
             document.getElementById('flipper').classList.remove('flipped');
         }
     </script>
-    
+    <script>document.getElementById('imageInput').addEventListener('change', handleImage);
+
+        function handleImage() {
+            const input = document.getElementById('imageInput');
+            const file = input.files[0];
+        
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const image = new Image();
+                    image.src = e.target.result;
+                    image.onload = function () {
+                        processImage(image);
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function processImage(image) {
+            Tesseract.recognize(
+                image,
+                'eng', // Language code (English in this case)
+                {
+                    logger: info => console.log(info)
+                }
+            ).then(({ data: { text } }) => {
+                document.getElementById('result').textContent = text;
+            });
+        }
+        </script>
     <script>
         function flipCard() {
             document.getElementById('flipper').classList.add('flipped');
@@ -415,4 +463,6 @@ div.tile{
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</h
+</html>
+npm install -g http-server
+http-server
