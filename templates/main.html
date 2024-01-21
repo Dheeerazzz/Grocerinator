@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<<<<<<< HEAD
+=======
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.9/themes/odometer-theme-default.min.css">
+</head>
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.3.0/dist/tesseract.min.js"></script>
     <style>
         body,
@@ -68,8 +73,12 @@
         }
 
         .section:nth-child(5) {
+<<<<<<< HEAD
             background-color: #ffffff;
             /* Orange */
+=======
+            background-color: #ffffff; /* Orange */
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
         }
 
 
@@ -111,7 +120,11 @@
             top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
+<<<<<<< HEAD
             animation: 8s linear infinite;
+=======
+          
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
         }
 
         .flip-container {
@@ -154,13 +167,18 @@
             position: absolute;
             top: 0px;
         }
+<<<<<<< HEAD
 
         #section4 {
+=======
+            #section4 {
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             margin: 0;
+<<<<<<< HEAD
         }
 
         .odometer {
@@ -228,6 +246,44 @@
                 }
             }
         </script>
+=======
+            }
+
+    .container3 {
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    top: 210vh;
+    left:20 px;
+    }
+    div.tile{
+        border:1px solid black;
+        padding:10px;
+        margin:40px;
+        border-radius: 15px;
+        height:500px;
+        box-shadow: 0 0 10px #000000;
+    }
+    #name1,#name2,#name3,#name4{
+        margin-top: 20px;
+        margin-left: 60px;
+        font-family: blueberry;
+    }
+    #name2{
+        margin-left: 80px;
+        margin-top: 30px;
+    }
+   
+        </style>
+        <title>Grocerinator</title>
+        </head>
+        <body>
+
+        <div id="section1" class="section">
+            <img src="/images/Bg.png" id="green_col">
+
+            <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
 
 
         <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
@@ -314,6 +370,7 @@
                                                         placeholder="Enter Energy">
                                                 </div>
                                             </div>
+<<<<<<< HEAD
                                             <!-- Right side columns -->
                                             <div class="col-md-6">
                                                 <!-- Sugar -->
@@ -340,6 +397,13 @@
                                                     <input type="text" class="form-control" id="Salt"
                                                         placeholder="Enter Salt">
                                                 </div>
+=======
+                                            <!-- Centered button for form submission -->
+                                            <div class="text-center">
+                                                <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
+                                                
+                                                <button type="submit" style="z-index:99;" class="btn btn-success" onclick="scrollToPage('section4')">Submit</button>
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
                                             </div>
                                         </div>
                                         <!-- Centered button for form submission -->
@@ -351,6 +415,7 @@
                                         </div>
                                     </form>
                                 </div>
+<<<<<<< HEAD
                             </div>
                             <!-- Back side of the card -->
                             <!-- Back side of the card -->
@@ -387,6 +452,131 @@
         // Get the video element
         const video = document.getElementById('cameraFeed');
 
+=======
+                                <!-- Back side of the card -->
+                                <div class="card back">
+                                    <div class="card-body">
+                                        <center>
+                                            <h5 class="card-title">Scan Results</h5>
+                                            <video id="cameraFeed" width="640" height="480" autoplay></video><br>
+                                            <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and Process</button>
+                                            <button type="button" class="btn btn-primary" onclick="unflipCard()">Go Back</button>
+                                            <div id="ocrResult"></div>
+                                        </center>
+                                    </div>
+                                    <script>
+                                        document.querySelector('form').addEventListener('submit', async function (e) {
+                                            e.preventDefault();
+                                    
+                                            const formData = new FormData(this);
+                                    
+                                            const response = await fetch('/process_image', {
+                                                method: 'POST',
+                                                body: formData
+                                            });
+                                    
+                                            const result = await response.json();
+                                    
+                                            document.getElementById('result').textContent = result.result;
+                                        });
+                                    </script>
+                                </div>
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+       
+        <div class="section" id="section4">
+            
+     
+        </div>
+
+        <script>//OCR Version
+            // Get the video element
+
+
+            // Request access to the camera
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    video.srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error('Error accessing camera:', error);
+                });
+
+            function performOCR() {
+                // Create a canvas to draw the current frame
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                // Convert canvas to base64 image
+                const dataUrl = canvas.toDataURL('image/jpeg');
+                const base64Image = dataUrl.split(',')[1];
+
+                // Send the image to the server for OCR processing
+                fetch('/process_ocr', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ image: base64Image }),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    // Display the OCR result
+                    document.getElementById('ocrResult').textContent = result.result;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        </script>
+
+        <script>//flip card
+            function flipCard() {
+                document.getElementById('flipper').classList.add('flipped');
+            }
+
+            function unflipCard() {
+                document.getElementById('flipper').classList.remove('flipped');
+            }
+        </script>
+
+        <script>//Scroll of page
+        function scrollToPage(sectionId) {
+            const sections = document.getElementById(sectionId);
+
+            if (sections) {
+                sections.style.display = 'flex';
+                window.scrollTo({
+                    top: sections.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        </script>
+
+        <script>//odometer scroll
+       
+
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        </body>
+        </html>
+
+    <script>
+        // Get the video element
+        let video = document.getElementById('cameraFeed');
+    
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
         // Request access to the camera
         navigator.mediaDevices.getUserMedia({ video: true })
             .then((stream) => {
@@ -453,6 +643,7 @@
         function unflipCard() {
             document.getElementById('flipper').classList.remove('flipped');
         }
+<<<<<<< HEAD
         document.addEventListener('DOMContentLoaded', function () {
             const thousands = document.getElementById('thousands');
             const hundreds = document.getElementById('hundreds');
@@ -474,10 +665,19 @@
                 ones.textContent = valueString[3];
             }
         });
+=======
+       
+
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<<<<<<< HEAD
 
 </html>
+=======
+</html>
+
+>>>>>>> 88f20b6380fb65e6032d67927abb490f6cd0ffc2
