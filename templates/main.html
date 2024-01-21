@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2.3.0/dist/tesseract.min.js"></script>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -40,7 +42,7 @@
             transform: translate(-50%, -50%);
             text-align: center;
             font-family: blueberry;
-            font-size:70px;
+            font-size: 70px;
         }
 
         #image-container {
@@ -61,10 +63,13 @@
         }
 
         .section:nth-child(4) {
-            background-color: #ffffff; /* Orange */
+            background-color: #ffffff;
+            /* Orange */
         }
+
         .section:nth-child(5) {
-            background-color: #121df3; /* Orange */
+            background-color: #ffffff;
+            /* Orange */
         }
 
 
@@ -89,7 +94,8 @@
             top: 60%;
             left: 30%;
             transform: translate(-50%, -50%);
-            background-color: #3f51b5; /* Indigo */
+            background-color: #3f51b5;
+            /* Indigo */
             border: 2px solid #3f51b5;
             color: white;
             padding: 15px 30px;
@@ -105,16 +111,8 @@
             top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation:  8s linear infinite;
+            animation: 8s linear infinite;
         }
-        @keyframes moveCart {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(calc(100vw - 100%));
-    }
-}
 
         .flip-container {
             perspective: 1000px;
@@ -130,7 +128,8 @@
             transform: rotateY(180deg);
         }
 
-        .front, .back {
+        .front,
+        .back {
             backface-visibility: hidden;
             position: absolute;
             top: 0;
@@ -142,6 +141,7 @@
         .back {
             transform: rotateY(180deg);
         }
+
         #form-section {
             width: 100%;
             height: 100%;
@@ -149,73 +149,109 @@
             top: 0;
             left: 0;
         }
-        #section-3 container{
+
+        #section-3 container {
             position: absolute;
             top: 0px;
         }
+
         #section4 {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-.odometer {
-  display: flex;
-  font-size: 2rem;
-}
+        .odometer {
+            display: flex;
+            font-size: 2rem;
+        }
 
-.digit {
-  margin: 0 0.2rem;
-  border: 1px solid #333;
-  padding: 0.5rem;
-  width: 2rem;
-  text-align: center;
-}
-.container3 {
-  width: 60%;
-  height: 100%;
-  position: absolute;
-  top: 210vh;
-  left:20 px;
-}
-div.tile{
-    border:1px solid black;
-    padding:10px;
-    margin:40px;
-    border-radius: 15px;
-    height:500px;
-    box-shadow: 0 0 10px #000000;
-}
-#name1,#name2,#name3,#name4{
-    margin-top: 20px;
-    margin-left: 60px;
-    font-family: blueberry;
-}
-#name2{
-    margin-left: 80px;
-    margin-top: 30px;
-}
+        .digit {
+            margin: 0 0.2rem;
+            border: 1px solid #333;
+            padding: 0.5rem;
+            width: 2rem;
+            text-align: center;
+        }
+
+        .container3 {
+            width: 60%;
+            height: 100%;
+            position: absolute;
+            top: 210vh;
+            left: 20 px;
+        }
+
+        div.tile {
+            border: 1px solid black;
+            padding: 10px;
+            margin: 40px;
+            border-radius: 15px;
+            height: 500px;
+            box-shadow: 0 0 10px #000000;
+        }
+
+        #name1,
+        #name2,
+        #name3,
+        #name4 {
+            margin-top: 20px;
+            margin-left: 60px;
+            font-family: blueberry;
+        }
+
+        #name2 {
+            margin-left: 80px;
+            margin-top: 30px;
+        }
     </style>
     <title>Grocerinator</title>
 </head>
+
 <body>
     <div id="section1" class="section">
         <img src="/images/Bg.png" id="green_col">
 
-        <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
+        <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);"
+            id="title">Grocerinator</span>
 
-        <button style="z-index:99;" id="submit" class="scroll-button" onclick="scrollToPage('section2')">Scroll to Next Section</button>
+        <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
+
+        <script>
+            function scrollToSection(sectionId) {
+                const section = document.getElementById(sectionId);
+
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        </script>
+
 
         <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
         <img src="/images/cart.png" id="cart">
 
-        <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
+        <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0"
+            class="giphy-embed" allowFullScreen></iframe>
+        <p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
     </div>
-    
-    
+    <script>
+        function scrollToPage(sectionId) {
+            const sections = document.getElementById(sectionId);
+
+            if (sections) {
+                sections.style.display = 'flex';
+                window.scrollTo({
+                    top: sections.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+
     <div id="section2" class="section">
         <div class="tile">
             <img src="/page2_images/baby.jpg" height="300" width="300">
@@ -234,124 +270,123 @@ div.tile{
             <div id="name4">To gain weight</div>
         </div>
         <div id="page2_button">
-            <button type="submit" class="btn btn-success" onclick="scrollToPage('section3')">Submit</button>
+            <button type="submit" class="btn btn-success" onclick="scrollToSection('section3')">Submit</button>
         </div>
     </div>
-      
-        <div id="section3" class="section">
-            <div class="container3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="flip-container">
-                            <div class="flipper" id="flipper">
-                                <!-- Front side of the card -->
-                                <div class="card front">
-                                    <div class="card-body">
-                                        <form id="myForm" return false;">
-                                            <h5 class="text-center mb-4">Enter Nutrient values</h5>
-                                            <div class="row">
-                                                <!-- Left side columns -->
-                                                <div class="col-md-6">
-                                                    <!-- Nutrient 1 -->
-                                                    <div class="form-group">
-                                                        <label for="Fats">Fats</label>
-                                                        <input type="text" class="form-control" id="nutrient1" placeholder="Enter fat values">
-                                                    </div>
-                                                    <!-- Saturated fats -->
-                                                    <div class="form-group">
-                                                        <label for="Saturated fats">Saturated fats:</label>
-                                                        <input type="text" class="form-control" id="nutrient2" placeholder="Enter Saturated fats">
-                                                    </div>
-                                                    <!-- Carbohydrates -->
-                                                    <div class="form-group">
-                                                        <label for="Carbohydrates">Carbohydrates:</label>
-                                                        <input type="text" class="form-control" id="Carbohydrates" placeholder="Enter Carbohydrates">
-                                                    </div>
-                                                    <!-- Energy -->
-                                                    <div class="form-group">
-                                                        <label for="Energy">Energy:</label>
-                                                        <input type="text" class="form-control" id="Energy" placeholder="Enter Energy">
-                                                    </div>
-                                                </div>
-                                                <!-- Right side columns -->
-                                                <div class="col-md-6">
-                                                    <!-- Sugar -->
-                                                    <div class="form-group">
-                                                        <label for="Sugar">Sugar:</label>
-                                                        <input type="text" class="form-control" id="Sugar" placeholder="Enter Sugar">
-                                                    </div>
-                                                    <!-- Fiber -->
-                                                    <div class="form-group">
-                                                        <label for="Fiber">Fiber:</label>
-                                                        <input type="text" class="form-control" id="Fiber" placeholder="Enter Fiber">
-                                                    </div>
-                                                    <!-- Protein -->
-                                                    <div class="form-group">
-                                                        <label for="Protein">Protein:</label>
-                                                        <input type="text" class="form-control" id="Protein" placeholder="Enter Protein">
-                                                    </div>
-                                                    <!-- Salt -->
-                                                    <div class="form-group">
-                                                        <label for="Salt">Salt:</label>
-                                                        <input type="text" class="form-control" id="Salt" placeholder="Enter Salt">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Centered button for form submission -->
-                                            <div class="text-center">
-                                                <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
-                                                <button type="submit" style="z-index:99;" class="btn btn-success" onclick="scrollToPage('section4')">Submit</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- Back side of the card -->
-                                <div class="card back">
-                                    <div class="card-body">
-                                        <center>
-                                            <h5 class="card-title">Scan Results</h5>
-                                            <video id="cameraFeed" width="640" height="480" autoplay></video><br>
-                                            <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and Process</button>
-                                            <div id="ocrResult"></div>
-                                        </center>
-                                    </div>
-                                    <script>
-                                        document.querySelector('form').addEventListener('submit', async function (e) {
-                                            e.preventDefault();
-                                    
-                                            const formData = new FormData(this);
-                                    
-                                            const response = await fetch('/process_image', {
-                                                method: 'POST',
-                                                body: formData
-                                            });
-                                    
-                                            const result = await response.json();
-                                    
-                                            document.getElementById('result').textContent = result.result;
-                                        });
-                                    </script>
-                                </div>
-                            </div> <!-- Closing div tag for flipper -->
-                        </div> <!-- Closing div tag for flip-container -->
-                    </div> <!-- Closing div tag for col-md-12 -->
-                </div> <!-- Closing div tag for row -->
-            </div> <!-- Closing div tag for container -->
-        </div> <!-- Closing div tag for section -->
-       
 
-    <div id="section4" class="section">
+
+    <div class="section" id="section3">
+        <div class="container3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="flip-container">
+                        <div class="flipper" id="flipper">
+                            <!-- Front side of the card -->
+                            <div class="card front">
+                                <div class="card-body">
+                                    <form id="myForm" return false;">
+                                        <h5 class="text-center mb-4">Enter Nutrient values</h5>
+                                        <div class="row">
+                                            <!-- Left side columns -->
+                                            <div class="col-md-6">
+                                                <!-- Nutrient 1 -->
+                                                <div class="form-group">
+                                                    <label for="Fats">Fats</label>
+                                                    <input type="text" class="form-control" id="nutrient1"
+                                                        placeholder="Enter fat values">
+                                                </div>
+                                                <!-- Saturated fats -->
+                                                <div class="form-group">
+                                                    <label for="Saturated fats">Saturated fats:</label>
+                                                    <input type="text" class="form-control" id="nutrient2"
+                                                        placeholder="Enter Saturated fats">
+                                                </div>
+                                                <!-- Carbohydrates -->
+                                                <div class="form-group">
+                                                    <label for="Carbohydrates">Carbohydrates:</label>
+                                                    <input type="text" class="form-control" id="Carbohydrates"
+                                                        placeholder="Enter Carbohydrates">
+                                                </div>
+                                                <!-- Energy -->
+                                                <div class="form-group">
+                                                    <label for="Energy">Energy:</label>
+                                                    <input type="text" class="form-control" id="Energy"
+                                                        placeholder="Enter Energy">
+                                                </div>
+                                            </div>
+                                            <!-- Right side columns -->
+                                            <div class="col-md-6">
+                                                <!-- Sugar -->
+                                                <div class="form-group">
+                                                    <label for="Sugar">Sugar:</label>
+                                                    <input type="text" class="form-control" id="Sugar"
+                                                        placeholder="Enter Sugar">
+                                                </div>
+                                                <!-- Fiber -->
+                                                <div class="form-group">
+                                                    <label for="Fiber">Fiber:</label>
+                                                    <input type="text" class="form-control" id="Fiber"
+                                                        placeholder="Enter Fiber">
+                                                </div>
+                                                <!-- Protein -->
+                                                <div class="form-group">
+                                                    <label for="Protein">Protein:</label>
+                                                    <input type="text" class="form-control" id="Protein"
+                                                        placeholder="Enter Protein">
+                                                </div>
+                                                <!-- Salt -->
+                                                <div class="form-group">
+                                                    <label for="Salt">Salt:</label>
+                                                    <input type="text" class="form-control" id="Salt"
+                                                        placeholder="Enter Salt">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Centered button for form submission -->
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to
+                                                Scan</button>
+                                            <button type="submit" class="btn btn-success"
+                                                onclick="scrollToSection('section4')">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Back side of the card -->
+                            <!-- Back side of the card -->
+                            <div class="card back">
+                                <div class="card-body">
+                                    <center>
+                                        <h5 class="card-title">Scan Results</h5>
+                                        <video id="cameraFeed" width="640" height="480" autoplay></video><br>
+                                        <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and
+                                            Process</button>
+                                        <div id="ocrResult"></div>
+                                    </center>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> <!-- Closing div tag for flipper -->
+                </div> <!-- Closing div tag for flip-container -->
+            </div> <!-- Closing div tag for col-md-12 -->
+        </div> <!-- Closing div tag for row -->
+    </div> <!-- Closing div tag for container -->
+    </div> <!-- Closing div tag for section -->
+
+
+    <div class="section" id="section4">
         <div class="odometer">
             <div class="digit" id="thousands">0</div>
             <div class="digit" id="hundreds">0</div>
             <div class="digit" id="tens">0</div>
             <div class="digit" id="ones">0</div>
-          </div>
+        </div>
     </div>
     <script>
         // Get the video element
         const video = document.getElementById('cameraFeed');
-    
+
         // Request access to the camera
         navigator.mediaDevices.getUserMedia({ video: true })
             .then((stream) => {
@@ -360,7 +395,7 @@ div.tile{
             .catch((error) => {
                 console.error('Error accessing camera:', error);
             });
-    
+
         function performOCR() {
             // Create a canvas to draw the current frame
             const canvas = document.createElement('canvas');
@@ -391,37 +426,7 @@ div.tile{
             });
         }
     </script>
-    <script>
-        function scrollToPage(sectionId) {
-            const nextPage = document.getElementById(sectionId);
-
-            if (nextPage) {
-                nextPage.style.display = 'flex';
-                window.scrollTo({
-                    top: nextPage.offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        }
-</script>
-<script>
-    const cart = document.getElementById('cart');
-
-    // Event listener to check when the animation completes
-    cart.addEventListener('animationiteration', checkCartPosition);
     
-    function checkCartPosition() {
-        // Get the position of the cart
-        const cartRect = cart.getBoundingClientRect();
-    
-        // Check if the cart is near the right edge of the viewport
-        if (cartRect.right >= window.innerWidth) {
-            // Perform the page transition logic here
-            // For now, let's simply redirect to the next page
-            window.location.href = 'nextPage.html';
-        }
-    }
-</script>
     <script>
         function flipCard() {
             document.getElementById('flipper').classList.add('flipped');
@@ -431,96 +436,48 @@ div.tile{
             document.getElementById('flipper').classList.remove('flipped');
         }
     </script>
-     <script>
-        function flipCard() {
-            document.getElementById('flipper').classList.add('flipped');
-        }
-    
-        function unflipCard() {
-            document.getElementById('flipper').classList.remove('flipped');
-        }
-    </script>
-
-    
     <script>
         function flipCard() {
             document.getElementById('flipper').classList.add('flipped');
         }
-    
+
         function unflipCard() {
             document.getElementById('flipper').classList.remove('flipped');
         }
     </script>
-    <script>document.getElementById('imageInput').addEventListener('change', handleImage);
-
-        function handleImage() {
-            const input = document.getElementById('imageInput');
-            const file = input.files[0];
-        
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const image = new Image();
-                    image.src = e.target.result;
-                    image.onload = function () {
-                        processImage(image);
-                    };
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        function processImage(image) {
-            Tesseract.recognize(
-                image,
-                'eng', // Language code (English in this case)
-                {
-                    logger: info => console.log(info)
-                }
-            ).then(({ data: { text } }) => {
-                document.getElementById('result').textContent = text;
-            });
-        }
-        </script>
     <script>
         function flipCard() {
             document.getElementById('flipper').classList.add('flipped');
         }
-    
+
         function unflipCard() {
             document.getElementById('flipper').classList.remove('flipped');
         }
         document.addEventListener('DOMContentLoaded', function () {
-  const thousands = document.getElementById('thousands');
-  const hundreds = document.getElementById('hundreds');
-  const tens = document.getElementById('tens');
-  const ones = document.getElementById('ones');
+            const thousands = document.getElementById('thousands');
+            const hundreds = document.getElementById('hundreds');
+            const tens = document.getElementById('tens');
+            const ones = document.getElementById('ones');
 
-  let odometerValue = 0;
+            let odometerValue = 0;
 
-  setInterval(() => {
-    odometerValue++;
-    updateOdometer();
-  }, 1000);
+            setInterval(() => {
+                odometerValue++;
+                updateOdometer();
+            }, 1000);
 
-  function updateOdometer() {
-    const valueString = odometerValue.toString().padStart(4, '0');
-    thousands.textContent = valueString[0];
-    hundreds.textContent = valueString[1];
-    tens.textContent = valueString[2];
-    ones.textContent = valueString[3];
-  }
-});
-
+            function updateOdometer() {
+                const valueString = odometerValue.toString().padStart(4, '0');
+                thousands.textContent = valueString[0];
+                hundreds.textContent = valueString[1];
+                tens.textContent = valueString[2];
+                ones.textContent = valueString[3];
+            }
+        });
     </script>
-    
-    
-    
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
-npm install -g http-server
-http-server
