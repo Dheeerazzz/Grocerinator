@@ -38,6 +38,8 @@
             left: 11%;
             transform: translate(-50%, -50%);
             text-align: center;
+            font-family: blueberry;
+            font-size:70px;
         }
 
         #image-container {
@@ -169,7 +171,23 @@
   top: 210vh;
   left:20 px;
 }
-
+div.tile{
+    border:1px solid black;
+    padding:10px;
+    margin:40px;
+    border-radius: 15px;
+    height:500px;
+    box-shadow: 0 0 10px #000000;
+}
+#name1,#name2,#name3,#name4{
+    margin-top: 20px;
+    margin-left: 60px;
+    font-family: blueberry;
+}
+#name2{
+    margin-left: 80px;
+    margin-top: 30px;
+}
     </style>
     <title>Grocerinator</title>
 </head>
@@ -179,7 +197,7 @@
 
         <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
-        <button id="submit" class="scroll-button" onclick="scrollToSection('section2')">Scroll to Next Section</button>
+        <button type="submit" id="submit" onclick="scrollToSection('section2')">Scroll to Next Section</button>
 
         <script>
             function scrollToSection(sectionId) {
@@ -201,12 +219,28 @@
 
     <div class="section" id="section2">
         <div class="tile">
-            <img src>
+            <img src="/page2_images/baby.jpg" height="300" width="300">
+            <div id="name1">Babies</div>
+        </div>
+        <div class="tile">
+            <img src="/page2_images/adult.jpg" height="300" width="300">
+            <div id="name2">Adults</div>
+        </div>
+        <div class="tile">
+            <img src="/page2_images/weight_loss.jpg" height="300" width="300">
+            <div id="name3">To lose weight</div>
+        </div>
+        <div class="tile">
+            <img src="/page2_images/muscle.jpg" height="300" width="300">
+            <div id="name4">To gain weight</div>
+        </div>
+        <div id="page2_button">
+            <button type="submit" class="btn btn-success" onclick="scrollToSection('section3')">Submit</button>
         </div>
     </div>
 
       
-        <div class="section">
+        <div class="section" id="section3">
             <div class="container3">
                 <div class="row">
                     <div class="col-md-12">
@@ -268,7 +302,7 @@
                                             <!-- Centered button for form submission -->
                                             <div class="text-center">
                                                 <button type="button" class="btn btn-primary" onclick="flipCard()">Flip to Scan</button>
-                                                <button type="submit" class="btn btn-success">Submit Form</button>
+                                                <button type="submit" class="btn btn-success" onclick="scrollToSection('section4')">Submit</button>
                                             </div>
                                         </form>
                                     </div>
@@ -368,4 +402,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
+</h
