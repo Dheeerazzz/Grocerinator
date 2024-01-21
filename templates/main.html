@@ -211,24 +211,27 @@
     
     <div id="section2" class="section">
         <div class="tile">
+            <button type="submit" onclick="scrollToPage('section3')" style="border:0px;">
             <img src="/page2_images/baby.jpg" height="300" width="300">
+        </button>
             <div id="name1">Babies</div>
         </div>
         <div class="tile">
-            <img src="/page2_images/adult.jpg" height="300" width="300">
+            <button type="submit" onclick="scrollToPage('section3')" style="border:0px;">
+            <img src="/page2_images/adult.jpg" height="300" width="300"></button>
             <div id="name2">Adults</div>
         </div>
         <div class="tile">
-            <img src="/page2_images/weight_loss.jpg" height="300" width="300">
+            <button type="submit" onclick="scrollToPage('section3')" style="border:0px;">
+            <img src="/page2_images/weight_loss.jpg" height="300" width="300"></button>
             <div id="name3">To lose weight</div>
         </div>
         <div class="tile">
-            <img src="/page2_images/muscle.jpg" height="300" width="300">
+            <button type="submit" onclick="scrollToPage('section3')" style="border:0px;">
+            <img src="/page2_images/muscle.jpg" height="300" width="300"></button>
             <div id="name4">To gain weight</div>
         </div>
-        <div id="page2_button">
-            <button type="submit" class="btn btn-success" onclick="scrollToPage('section3')">Submit</button>
-        </div>
+       
     </div>
       
         <div id="section3" class="section">
@@ -334,10 +337,21 @@
             </div> 
         </div> 
        
-        <div class="section" id="section4">
-            
-     
+        <div class="section" id="section4" >
+          <div id="score">The Predicted Score is&nbsp;</div>
+          <div id="randomNumberContainer" onmouseenter="generateRandomNumber()">&emsp; number  &emsp;</div>
         </div>
+
+
+        <script>
+            function generateRandomNumber() {
+              // Generate a random number between 1 and 10 (including decimals)
+              const randomNumber = (Math.random() * 9) + 1;
+          
+              // Update the content of the div with the generated random number
+              document.getElementById('randomNumberContainer').innerHTML = `${randomNumber.toFixed(1)}`;
+            }
+          </script>
 
         <script>//OCR Version
             // Get the video element
