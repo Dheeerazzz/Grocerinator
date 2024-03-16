@@ -202,15 +202,15 @@
         <body>
 
         <div id="section1" class="section">
-            <img src="/images/Bg.png" id="green_col">
+            <img src="../images/Bg.png" id="green_col">
 
             <span style="position: absolute; top: 35%; left: 21%; transform: translate(-50%, -50%);" id="title">Grocerinator</span>
 
         <button style="z-index:99;" id="submit" class="scroll-button" onclick="scrollToPage('section2')">Scroll to Next Section</button>
 
-        <img src="/images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
+        <img src="../images/stars.png" id="cart" style="position: absolute;left:100px;top:60%">
 
-        <img src="/images/cart.png" id="cart">
+        <img src="../images/cart.png" id="cart">
 
         <iframe id="myIframe" src="https://giphy.com/embed/tDbPlJFxQZeREMsdnO" width="680" height="680" frameBorder="0" class="giphy-embed" allowFullScreen ></iframe><p><a href="https://giphy.com/gifs/tDbPlJFxQZeREMsdnO"></a></p>
     </div>
@@ -219,22 +219,22 @@
     <div id="section2" class="section">
         <div class="tile">
             <button type="submit" onclick="scrollToPage('section3')"style="border:0px">
-            <img src="/page2_images/baby.jpg" height="300" width="300" style="border:0px"></button>
+            <img src="../page2_images/baby.jpg" height="300" width="300" style="border:0px"></button>
             <div id="name1">Babies</div>
         </div>
         <div class="tile">
             <button type="submit" onclick="scrollToPage('section3')"style="border:0px">
-            <img src="/page2_images/adult.jpg" height="300" width="300" style="border:0px"></button>
+            <img src="../page2_images/adult.jpg" height="300" width="300" style="border:0px"></button>
             <div id="name2">Adults</div>
         </div>
         <div class="tile">
             <button type="submit" onclick="scrollToPage('section3')" style="border:0px">
-            <img src="/page2_images/weight_loss.jpg" height="300" width="300" style="border:0px"></button>
+            <img src="../page2_images/weight_loss.jpg" height="300" width="300" style="border:0px"></button>
             <div id="name3">To lose weight</div>
         </div>
         <div class="tile">
             <button type="submit" onclick="scrollToPage('section3')" style="border:0px">
-            <img src="/page2_images/muscle.jpg" height="300" width="300" ></button>
+            <img src="../page2_images/muscle.jpg" height="300" width="300" ></button>
             <div id="name4">To gain weight</div>
         </div>
         
@@ -308,39 +308,29 @@
                                         </form>
                                     </div>
                                 </div>
-                                <!-- Back side of the card -->
-                                <div class="card back">
-                                    <div class="card-body">
-                                        <center>
-                                            <h5 class="card-title">Scan Results</h5>
-                                            <video id="cameraFeed" width="640" height="480" autoplay></video><br>
-                                            <button type="button" class="btn btn-secondary" onclick="performOCR()">Scan and Process</button>
-                                            <button type="button" class="btn btn-primary" onclick="unflipCard()">Go Back</button>
-                                            <div id="ocrResult"></div>
-                                        </center>
-                                    </div>
-                                    <script>
-                                        document.querySelector('form').addEventListener('submit', async function (e) {
-                                            e.preventDefault();
-                                    
-                                            const formData = new FormData(this);
-                                    
-                                            const response = await fetch('/process_image', {
-                                                method: 'POST',
-                                                body: formData
-                                            });
-                                    
-                                            const result = await response.json();
-                                    
-                                            document.getElementById('result').textContent = result.result;
-                                        });
-                                    </script>
-                                </div>
+                   
+<div class="card back">
+    <div class="card-body">
+        <center>
+            <h5 class="card-title">Scan Results</h5>
+            <!-- Video element for displaying the camera feed -->
+            <video id="cameraFeed" width="640" height="480" autoplay></video><br>
+            <!-- Modified button to capture image and send to Flask -->
+            <button type="button" class="btn btn-secondary" onclick="captureAndProcessImage()">Scan and Process</button>
+            <button type="button" class="btn btn-primary" onclick="unflipCard()">Go Back</button>
+            <div id="ocrResult"></div>
+        </center>
+    </div>
+</div>
+
+
                             </div> 
                         </div> 
                     </div> 
                 </div> 
             </div> 
+            <div id="ocrResult" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+
         </div> 
        
         <div class="section" id="section4">
@@ -361,36 +351,51 @@
                     console.error('Error accessing camera:', error);
                 });
 
-            function performOCR() {
-                // Create a canvas to draw the current frame
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                function performOCR() {
 
-                // Convert canvas to base64 image
-                const dataUrl = canvas.toDataURL('image/jpeg');
-                const base64Image = dataUrl.split(',')[1];
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                // Send the image to the server for OCR processing
-                fetch('/process_ocr', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ image: base64Image }),
-                })
-                .then(response => response.json())
-                .then(result => {
-                    // Display the OCR result
-                    document.getElementById('ocrResult').textContent = result.result;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
+    // Convert canvas to base64 image
+    const dataUrl = canvas.toDataURL('image/jpeg');
+    const base64Image = dataUrl.split(',')[1];
+
+    // Send the image to the Flask backend
+    fetch('/process_image', {
+        method: 'POST',
+        body: JSON.stringify({ image: base64Image }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(result => {
+        // Handle response from Flask if needed
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
         </script>
+<script>
+    function processImage(image) {
+        Tesseract.recognize(
+            image,
+            'eng', // Language code (English in this case)
+            {
+                logger: info => console.log(info)
+            }
+        ).then(({ data: { text } }) => {
+            // Update the content of the ocrResult div with the OCR result
+            document.getElementById('ocrResult').textContent = text;
+        });
+    }
+</script>
 
         <script>//flip card
             function flipCard() {
@@ -416,10 +421,39 @@
         }
         </script>
 
-        <script>//odometer scroll
-       
+<script>
+    function captureAndProcessImage() {
+        // Create a canvas to draw the current frame
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const video = document.getElementById('cameraFeed');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        </script>
+        // Convert canvas to base64 image
+        const dataUrl = canvas.toDataURL('image/jpeg');
+        const base64Image = dataUrl.split(',')[1];
+
+        // Send the image to Flask for processing
+        fetch('/process_image', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ image: base64Image }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Display the processing result
+            document.getElementById('ocrResult').textContent = result.result;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>

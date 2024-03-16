@@ -1,57 +1,89 @@
-from flask import Flask, render_template, request, jsonify
-import io
-import cv2
-import json
-import requests
+from flask import Flask, request, jsonify, render_template
 import base64
-import numpy as np
+import requests
+import json
+import joblib
 
 app = Flask(__name__)
 
-# Function to perform OCR on the given image
-def perform_ocr(image):
-    # Your OCR processing code here...
-    height, width, _ = image.shape
-    roi = image[0: height, 100: width]
+# OCR API key
+OCR_API_KEY = 'K88288596988957'
 
-    url_api = "https://api.ocr.space/parse/image"
-    _, compressedimage = cv2.imencode("images\sample_ocr.jpg", roi, [1, 90])
-    file_bytes = io.BytesIO(compressedimage)
 
-    result = requests.post(url_api,
-                           files={"images\sample_ocr.png": file_bytes},
-                           data={"apikey": "K83764290988957",
-                                 "language": "eng"})
-    result = result.content.decode()
-    result = json.loads(result)
-
-    parsed_results = result.get("ParsedResults")
-    if parsed_results is not None:
-        parsed_result = parsed_results[0]
-        text_detected = parsed_result.get("ParsedText")
-        return text_detected
-    else:
-        return "ParsedResults is None"
+model_babies = joblib.load('models ra ungamma/model1.pkl')
+model_adults = joblib.load('models ra ungamma/model2.pkl')
+model_lose_weight = joblib.load('models ra ungamma/model3.pkl')
+model_gain_weight = joblib.load('models ra ungamma/model4.pkl')
 
 @app.route('/')
 def index():
+    # Render the index.html template
     return render_template('main.html')
 
-@app.route('/process_ocr', methods=['POST'])
-def process_ocr():
-    try:
-        # Get the base64-encoded image from the request
-        image_data = request.json.get('image')
-        image_bytes = io.BytesIO(base64.b64decode(image_data))
+@app.route('/process_image', methods=['POST'])
+def process_image():
+    # Receive image data from the frontend
+    data = request.json
+    image_data_str = data['image']
+    
+    # Convert the base64-encoded string to bytes
+    image_data_bytes = base64.b64decode(image_data_str)
 
-        # Perform OCR on the image
-        img = cv2.imdecode(np.frombuffer(image_bytes.read(), np.uint8), cv2.IMREAD_COLOR)
-        ocr_result = perform_ocr(img)
+    # Save the received image locally (optional)
+    with open('captured_image.png', 'wb') as f:
+        f.write(image_data_bytes)
 
-        return jsonify({'result': ocr_result})
+    # Call the OCR API to process the image
+    ocr_result = ocr_space_file('captured_image.png', api_key=OCR_API_KEY)
 
-    except Exception as e:
-        return jsonify({'error': str(e)})
+    # Parse the JSON response
+    ocr_result_json = json.loads(ocr_result)
+
+    # Extract the useful text from the OCR result
+    parsed_text = ocr_result_json['ParsedResults'][0]['ParsedText']
+
+    # Return the useful text
+    return jsonify({'result': parsed_text})
+
+def ocr_space_file(filename, overlay=False, api_key='helloworld', language='eng'):
+    payload = {'isOverlayRequired': overlay,
+               'apikey': api_key,
+               'language': language,
+               }
+    with open(filename, 'rb') as f:
+        r = requests.post('https://api.ocr.space/parse/image',
+                          files={filename: f},
+                          data=payload,
+                          )
+    return r.content.decode()
+
+
+@app.route('/process_form', methods=['POST'])
+def process_form():
+    selected_option = request.form['option']
+    
+    fats = float(request.form['fats'])
+    saturated_fats = float(request.form['saturated_fats'])
+    carbohydrates = float(request.form['carbohydrates'])
+    energy = float(request.form['energy'])
+    sugar = float(request.form['sugar'])
+    fiber = float(request.form['fiber'])
+    protein = float(request.form['protein'])
+    salt = float(request.form['salt'])
+
+    if selected_option == 'babies':
+        model = model_babies
+    elif selected_option == 'adults':
+        model = model_adults
+    elif selected_option == 'lose_weight':
+        model = model_lose_weight
+    elif selected_option == 'gain_weight':
+        model = model_gain_weight
+
+    input_data = [[fats, saturated_fats, carbohydrates, energy, sugar, fiber, protein, salt]]
+    predicted_values = model.predict(input_data)
+    return jsonify({'predicted_values': predicted_values.tolist()})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
